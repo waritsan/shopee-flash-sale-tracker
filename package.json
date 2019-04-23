@@ -1,0 +1,22 @@
+{
+  "name": "shopee-flash-sale-tracker",
+  "version": "1.0.0",
+  "description": "Scrape the Shopee Flash Sale page and send alert when a desired item goes on sale.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waritsan/shopee-flash-sale-tracker.git"
+  },
+  "keywords": [
+    "shopee"
+  ],
+  "author": "Warit Santaputra",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/waritsan/shopee-flash-sale-tracker/issues"
+  },
+  "homepage": "https://github.com/waritsan/shopee-flash-sale-tracker#readme"
+}

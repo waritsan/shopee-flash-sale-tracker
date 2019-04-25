@@ -1,4 +1,4 @@
-const request = require('request').defaults({ jar: true })
+const request = require('request')
 const cheerio = require('cheerio')
 const fs = require('fs')
 
@@ -7,6 +7,11 @@ const flashSaleUri = 'https://shopee.co.th/api/v2/flash_sale/get_items?promotion
 request.get(flashSaleUri, (err, _, body) => {
     if (err) return console.log(err)
     writeFile(body)
+    const items = JSON.parse(body).data.items;
+    items.forEach(item => {
+        console.log(item.name)
+    });
+
 })
 
 function writeFile(data) {

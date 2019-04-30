@@ -1,6 +1,8 @@
 const request = require('request')
 const cheerio = require('cheerio')
 const fs = require('fs')
+const level = require('level')
+
 
 const flashSaleUri = 'https://shopee.co.th/api/v2/flash_sale/get_items?promotionid=2000017728'
 const myItemNames = ['Seagate', 'Cherilon']
@@ -10,7 +12,8 @@ request.get(flashSaleUri, (err, _, body) => {
     writeFile(body)
     const flashSaleItems = JSON.parse(body).data.items
     myItemNames.forEach(myItemName => {
-        const matchItems = flashSaleItems.filter(flashSaleItem => flashSaleItem.name.includes(myItemName))
+        const matchItems = flashSaleItems.filter(flashSaleItem => flashSaleItem.name
+            .includes(myItemName))
         if (matchItems.length > 0) {
             console.log(matchItems)
         }
@@ -22,4 +25,3 @@ function writeFile(data) {
         if (err) console.log(err)
     })
 }
-

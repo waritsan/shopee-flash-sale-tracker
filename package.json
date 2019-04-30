@@ -21,6 +21,7 @@
   "homepage": "https://github.com/waritsan/shopee-flash-sale-tracker#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
+    "level": "^5.0.1",
     "request": "^2.88.0"
   }
 }

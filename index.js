@@ -1,6 +1,4 @@
 const request = require('request')
-const cheerio = require('cheerio')
-const fs = require('fs')
 const level = require('level')
 const Fuse = require('fuse.js')
 const sendEmail = require('./sendEmail')
@@ -30,7 +28,6 @@ getFlashSaleItems((err, items) => {
 function getFlashSaleItems(callback) {
     request.get(flashSaleUri, (err, _, body) => {
         if (err) return callback(err)
-        writeFile(body)
         const flashSaleItems = JSON.parse(body).data.items
         callback(null, flashSaleItems)
     })
@@ -56,12 +53,6 @@ function searchItems(items) {
                 sendEmail(JSON.stringify(itemInfo, null, 2))
             })
         })
-    })
-}
-
-function writeFile(data) {
-    fs.writeFile('./flash_sale.json', data, err => {
-        if (err) console.log(err)
     })
 }
 

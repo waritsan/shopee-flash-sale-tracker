@@ -3,35 +3,29 @@ const cheerio = require('cheerio')
 const fs = require('fs')
 const level = require('level')
 const Fuse = require('fuse.js')
+const sendEmail = require('./sendEmail')
 
-const flashSaleUri = 'https://shopee.co.th/api/v2/flash_sale/get_items?promotionid=2000018001'
-// const flashSaleUri = 'https://shopee.co.th/api/v2/flash_sale/get_items'
+// const flashSaleUri = 'https://shopee.co.th/api/v2/flash_sale/get_items?promotionid=2000018014'
+const flashSaleUri = 'https://shopee.co.th/api/v2/flash_sale/get_items'
 const db = level('my-db')
 
-putItemInDb({
-    name: 'PS4 Pro',
-    price: 20000
-}, err => {
-    if (err) console.log(err)
-})
-
-// deleteItem('function now() { [native code] }')
-
-getItemsFromDb(items => {
-    console.log(items)
-})
-
-// getFlashSaleItems((err, items) => {
-//     if (err) return console.log(err)
-//     const options = {
-//         shouldSort: true,
-//         keys: ['name'],
-//         id: 'name'
-//     }
-//     const fuse = new Fuse(items, options)
-//     const result = fuse.search('apple watch 4')
-//     console.log(result)
+// putItemInDb({
+//     name: 'AX',
+//     price: 20000
+// }, err => {
+//     if (err) console.log(err)
 // })
+
+// deleteItem('item1557029316680')
+
+// getItemsFromDb(items => {
+//     console.log(items)
+// })
+
+getFlashSaleItems((err, items) => {
+    if (err) return console.log(err)
+    searchItems(items)
+})
 
 function getFlashSaleItems(callback) {
     request.get(flashSaleUri, (err, _, body) => {
@@ -43,14 +37,24 @@ function getFlashSaleItems(callback) {
 }
 
 function searchItems(items) {
+    const options = {
+        shouldSort: true,
+        threshold: 0.3,
+        keys: ['name']
+    }
+    const fuse = new Fuse(items, options)
     getItemsFromDb(myItems => {
         myItems.forEach(myItem => {
-            myItem.value.forEach(stringToken => {
-                const matchItems = items.filter(flashSaleItem => flashSaleItem.name.includes(myItem))
+            const myItemValue = JSON.parse(myItem.value)
+            const foundItems = fuse.search(myItemValue.name)
+            foundItems.forEach(foundItem => {
+                const itemInfo = {
+                    name: foundItem.name,
+                    link: `https://shopee.co.th/${foundItem.name}-i.${foundItem.shopid}.${foundItem.itemid}`,
+                    startTime: new Date(foundItem.start_time)
+                }
+                sendEmail(JSON.stringify(itemInfo, null, 2))
             })
-            if (matchItems.length > 0) {
-                console.log(matchItems)
-            }
         })
     })
 }

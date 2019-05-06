@@ -8,8 +8,7 @@ const flashSaleUri = 'https://shopee.co.th/api/v2/flash_sale/get_items'
 const db = level('my-db')
 
 // putItemInDb({
-//     name: 'AX',
-//     price: 20000
+//     name: 'AMERICAN TOURISTER'
 // }, err => {
 //     if (err) console.log(err)
 // })

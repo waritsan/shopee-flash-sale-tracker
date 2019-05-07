@@ -14,7 +14,7 @@ const db = level('my-db')
 
 // deleteItem('item1557029316680')
 
-function createItem(item, callback) {
+function addItem(item, callback) {
     db.put('item' + Date.now(), JSON.stringify(item), err => {
         if (err) return callback(err)
     })
@@ -31,14 +31,14 @@ function getItems(callback) {
         })
 }
 
-function deleteItem(name, callback) {
+function removeItem(name, callback) {
     db.del(name, err => {
         if (err) return callback(err)
     })
 }
 
 module.exports = {
-    createItem,
+    addItem,
     getItems,
-    deleteItem
+    removeItem
 }

@@ -1,9 +1,13 @@
 const express = require('express')
 const level = require('level')
+const wishList = require('../wishList')
 
 const router = express.Router()
-const db = level('my-db')
 
-router.get('/', (req, res) => {
-
+router.get('/', (_, res) => {
+    wishList.getItems(items => {
+        res.json(items)
+    })
 })
+
+module.exports = router

@@ -22,9 +22,9 @@ function addItem(item, callback) {
 
 function getItems(callback) {
     var items = []
-    db.createReadStream()
+    db.createValueStream()
         .on('data', data => {
-            items.push(data)
+            items.push(JSON.parse(data))
         })
         .on('end', () => {
             callback(items)

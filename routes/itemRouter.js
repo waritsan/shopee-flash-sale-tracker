@@ -4,9 +4,29 @@ const wishList = require('../wishList')
 
 const router = express.Router()
 
-router.get('/', (_, res) => {
+router.get('/', (req, res) => {
     wishList.getItems(items => {
         res.json(items)
+    })
+})
+
+router.post('/', (req, res) => {
+    wishList.createItem(req.body, err => {
+        if (err) {
+            console.log(err)
+            return res.json(err)
+        }
+        res.json({'message': 'Item created successfully!'})
+    })
+})
+
+router.delete('/', (req, res) => {
+    wishList.deleteItem(req.body.key, err => {
+        if (err) {
+            console.log(err)
+            return res.json(err)
+        }
+        res.json({'message': 'Item deleted successfully!'})
     })
 })
 

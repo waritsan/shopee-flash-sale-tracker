@@ -12,10 +12,10 @@ const db = level('my-db')
 //     console.log(items)
 // })
 
-// removeItem('item1557029316680')
+// deleteItem('1557029316680')
 
 function createItem(item, callback) {
-    db.put('item' + Date.now(), JSON.stringify(item), err => {
+    db.put(Date.now(), JSON.stringify(item), err => {
         if (err) return callback(err)
         callback(null)
     })

@@ -20,8 +20,8 @@ router.post('/', (req, res) => {
     })
 })
 
-router.delete('/', (req, res) => {
-    wishList.deleteItem(req.body.key, err => {
+router.delete('/:id', (req, res) => {
+    wishList.deleteItem(req.params.id, err => {
         if (err) {
             console.log(err)
             return res.json(err)

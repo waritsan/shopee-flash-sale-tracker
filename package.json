@@ -4,6 +4,7 @@
   "description": "Scrape the Shopee Flash Sale page and send alert when a desired item goes on sale.",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

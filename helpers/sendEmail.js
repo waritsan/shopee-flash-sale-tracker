@@ -4,14 +4,14 @@ function sendEmail(text) {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: process.env.EMAIL,
+            user: process.env.MAIL_FROM,
             pass: process.env.PASSWORD
         }
     })
     
     var mailOptions = {
-        from: '"Mail Bot " <mailbot8020@gmail.com>',
-        to: 'waritsan@gmail.com',
+        from: `"Mail Bot " <${process.env.MAIL_FROM}>`,
+        to: process.env.MAIL_TO,
         subject: 'Shoppe Flash-Sale Alert ',
         text: text
     }

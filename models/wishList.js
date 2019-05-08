@@ -1,6 +1,6 @@
 const level = require('level')
 
-const db = level('my-db')
+const db = level('wishlist-db')
 
 // addItem({
 //     name: 'AMERICAN TOURISTER'

@@ -1,6 +1,5 @@
 const express = require('express')
-const level = require('level')
-const wishList = require('../wishList')
+const wishList = require('../models/wishList')
 
 const router = express.Router()
 

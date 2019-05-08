@@ -60,4 +60,5 @@ typings/
 # next.js build output
 .next
 
-my-db
+wishlist-db
+preferences-db

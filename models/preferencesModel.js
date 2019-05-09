@@ -3,11 +3,11 @@ const db = level('preferences-db')
 
 const promotionIdKey = 'promotionId'
 
-function getCurrentPromotionId(callback) {
+function getPromotionId(callback) {
     get(promotionIdKey, callback)
 }
 
-function setCurrentPromotionId(value, callback) {
+function setPromotionId(value, callback) {
     db.put(promotionIdKey, value, err => {
         if (err) return callback(err)
         callback(null)
@@ -43,8 +43,8 @@ function getAll(callback) {
 }
 
 module.exports = {
-    getCurrentPromotionId,
-    setCurrentPromotionId,
+    getPromotionId,
+    setPromotionId,
     get,
     getAll,
     set

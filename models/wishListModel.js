@@ -27,8 +27,11 @@ function getItems(callback) {
         .on('data', data => {
             items.push(data)
         })
+        .on('error', err => {
+            callback(err)
+        })
         .on('end', () => {
-            callback(items)
+            callback(null, items)
         })
 }
 

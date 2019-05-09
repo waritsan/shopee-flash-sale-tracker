@@ -1,10 +1,14 @@
 const express = require('express')
-const wishList = require('../models/wishList')
+const wishList = require('../models/wishListModel')
 
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    wishList.getItems(items => {
+    wishList.getItems((err, items) => {
+        if (err) {
+            console.log(err)
+            return res.json(err)
+        }
         res.json(items)
     })
 })

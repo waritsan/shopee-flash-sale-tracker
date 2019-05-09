@@ -1,10 +1,9 @@
 const request = require('request')
 const Fuse = require('fuse.js')
-const sendEmail = require('./helpers/sendEmail')
-const wishList = require('./models/wishListModel')
-const preferences = require('./models/preferencesModel')
+const sendEmail = require('./sendEmail')
+const wishList = require('../models/wishListModel')
+const preferences = require('../models/preferencesModel')
 
-// const flashSaleUri = 'https://shopee.co.th/api/v2/flash_sale/get_items?promotionid=2000018014'
 const flashSaleUri = 'https://shopee.co.th/api/v2/flash_sale/get_items'
 
 function getFlashSaleItems() {
@@ -43,4 +42,4 @@ function getFlashSaleItems() {
     })
 }
 
-getFlashSaleItems()
+module.exports = getFlashSaleItems

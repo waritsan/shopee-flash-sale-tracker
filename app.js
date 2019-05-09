@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const itemRouter = require('./routes/itemRouter')
+const preferencesRouter = require('./routes/preferencesRouter')
 
 const app = express()
 const port  = process.env.PORT || 8080

@@ -1,14 +1,14 @@
 const level = require('level')
 const db = level('preferences-db')
 
-const currentPromotionIdKey = 'currentPromotionIdKey'
+const promotionIdKey = 'promotionId'
 
 function getCurrentPromotionId(callback) {
-    get(currentPromotionIdKey, callback)
+    get(promotionIdKey, callback)
 }
 
 function setCurrentPromotionId(value, callback) {
-    db.put(currentPromotionIdKey, value, err => {
+    db.put(promotionIdKey, value, err => {
         if (err) return callback(err)
         callback(null)
     })

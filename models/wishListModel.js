@@ -1,18 +1,5 @@
 const level = require('level')
-
 const db = level('wishlist-db')
-
-// addItem({
-//     name: 'AMERICAN TOURISTER'
-// }, err => {
-//     if (err) console.log(err)
-// })
-
-// getItems(items => {
-//     console.log(items)
-// })
-
-// deleteItem('1557029316680')
 
 function createItem(item, callback) {
     db.put(Date.now(), JSON.stringify(item), err => {

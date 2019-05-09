@@ -7,22 +7,29 @@ const preferences = require('../models/preferencesModel')
 const flashSaleUri = 'https://shopee.co.th/api/v2/flash_sale/get_items'
 
 function getFlashSaleItems() {
-    preferences.getCurrentPromotionId((err, currentPromotionid) => {
-        if (err) return console.log('Error getCurrentPromotionId: ' + err)
-        const nextPromotionid = parseInt(currentPromotionid) + 1
+    preferences.getPromotionId((err, promotionId) => {
+        if (err) return console.log('Error getPromotionId: ' + err)
+        const nextPromotionid = parseInt(promotionId) + 1
         const nextFlashSaleUrl = flashSaleUri + '?promotionid=' + nextPromotionid
         request.get(nextFlashSaleUrl, (err, _, body) => {
             if (err) return console.log('Error getFlashSaleUrl: ' + err)
-            if (JSON.parse(body).data.total > 0) {
-                preferences.setCurrentPromotionId(nextPromotionid, err => {
+            const data = JSON.parse(body).data
+            if (!data) {
+                // TODO
+                // getCurrentPromotionIdFromShopee((err, promotionId) => {
+                //     callShoppeFlashSaleApi((err, items) => {
+
+                //     })
+                // })
+            }
+            if (data.total > 0) {
+                preferences.setPromotionId(nextPromotionid, err => {
                     if (err) return console.log('Error setCurrentPromotionId: ' + err)
-                    const flashSaleItems = JSON.parse(body).data.items
-                    const options = {
+                    const fuse = new Fuse(data.items, {
                         shouldSort: true,
                         threshold: 0.3,
                         keys: ['name']
-                    }
-                    const fuse = new Fuse(flashSaleItems, options)
+                    })
                     wishList.getItems(wishListItems => {
                         wishListItems.forEach(wishListItem => {
                             const matchItems = fuse.search(JSON.parse(wishListItem.value).name)
@@ -40,6 +47,14 @@ function getFlashSaleItems() {
             }
         })
     })
+}
+
+function getCurrentPromotionIdFromShopee(callback) {
+
+}
+
+function callShoppeFlashSaleApi(callback) {
+
 }
 
 module.exports = getFlashSaleItems

@@ -24,8 +24,7 @@ router.get('/', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
-    preferences.set(req.params.id, req.params.value, err => {
-        console.log(req.params.id + ': ' + req.params.value)
+    preferences.set(req.params.id, req.query.value, err => {
         if (err) {
             console.log(err)
             return res.json(err)

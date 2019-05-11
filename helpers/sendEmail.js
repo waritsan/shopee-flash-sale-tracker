@@ -17,7 +17,7 @@ function sendEmail(text) {
     }
     
     transporter.sendMail(mailOptions, (err, info) => {
-        if (err) return console.log(error)
+        if (err) return console.log(err)
         console.log('Message sent: ' + info.response);
     })
 }

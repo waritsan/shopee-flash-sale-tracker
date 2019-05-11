@@ -33,4 +33,14 @@ router.put('/:id', (req, res) => {
     })
 })
 
+router.delete('/:id', (req, res) => {
+    preferences.deletePreference(req.params.id, err => {
+        if (err) {
+            console.log(err)
+            return res.json(err)
+        }
+        res.json({'message': `${req.params.id} deleted successfully!`})
+    })
+})
+
 module.exports = router

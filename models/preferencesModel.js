@@ -28,6 +28,14 @@ function get(key, callback) {
     })
 }
 
+function incrementPromotionId(callback) {
+    getPromotionId((err, value) => {
+        if (err) return callback(err)
+        value++
+        setPromotionId(value, callback)
+    })
+}
+
 function getAll(callback) {
     var preferences = []
     db.createReadStream()
@@ -42,10 +50,19 @@ function getAll(callback) {
         })
 }
 
+function deletePreference(key, callback) {
+    db.del(key, err => {
+        if (err) return callback(err)
+        callback(null)
+    })
+}
+
 module.exports = {
     getPromotionId,
     setPromotionId,
     get,
     getAll,
-    set
+    set,
+    incrementPromotionId,
+    deletePreference
 }

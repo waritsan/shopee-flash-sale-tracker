@@ -3,6 +3,7 @@ const Fuse = require('fuse.js')
 const sendEmail = require('./sendEmail')
 const wishList = require('../models/wishListModel')
 const preferences = require('../models/preferencesModel')
+const convertTimestamp = require('./convertTimestamp')
 
 const flashSaleUri = 'https://shopee.co.th/api/v2/flash_sale/get_items'
 
@@ -30,7 +31,7 @@ function buildEmailBody(items) {
         return {
             name: item.name,
             link: `https://shopee.co.th/shop/-i.${item.shopid}.${item.itemid}`,
-            startTime: new Date(item.start_time)
+            startTime: convertTimestamp(item.start_time)
         }
     })
 }

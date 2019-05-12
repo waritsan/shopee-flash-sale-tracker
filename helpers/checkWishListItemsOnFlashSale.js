@@ -6,14 +6,14 @@ const preferences = require('../models/preferencesModel')
 
 const flashSaleUri = 'https://shopee.co.th/api/v2/flash_sale/get_items'
 
-function checkIfItemsInWishListAreOnSale() {
+function checkWishListItemsOnFlashSale() {
     getFlashSaleItems((err, flashSaleItems) => {
         if (err) return console.log('Error getFlashSaleItems: ' + err)
         if (flashSaleItems.length === 0) return console.log('Flash sale has not started yet.')
         wishList.getItems((err, wishListItems) => {
             if (err) return console.log('Error wishList.getItems: ' + err)
             if (wishListItems.length === 0) return console.log('No items in wish list.')
-            const matchedItems = searchWishListItemsInFlashSaleItems(wishListItems, flashSaleItems)
+            const matchedItems = searchFlashSaleItems(wishListItems, flashSaleItems)
             if (matchedItems.length === 0) return console.log('No wish list items found in this flash sale.')
             console.log('Found items in flash sale: ' + matchedItems.map(item => item.name))
             const emailBody = buildEmailBody(matchedItems)
@@ -35,7 +35,7 @@ function buildEmailBody(items) {
     })
 }
 
-function searchWishListItemsInFlashSaleItems(wishListItems, flashSaleItems) {
+function searchFlashSaleItems(wishListItems, flashSaleItems) {
     const fuse = new Fuse(flashSaleItems, {
         shouldSort: true,
         threshold: 0.3,
@@ -97,4 +97,4 @@ function requestFlashSaleApi(uri, callback) {
     })
 }
 
-module.exports = checkIfItemsInWishListAreOnSale
+module.exports = checkWishListItemsOnFlashSale

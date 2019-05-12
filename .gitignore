@@ -62,3 +62,5 @@ typings/
 
 wishlist-db
 preferences-db
+
+.DS_Store

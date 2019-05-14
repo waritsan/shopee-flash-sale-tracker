@@ -1,5 +1,5 @@
-const Item = require('../models/itemModel')
 const mongoose = require('mongoose')
+const Item = require('../models/itemModel')
 
 const mongodbUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/shopee'
 

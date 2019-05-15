@@ -14,15 +14,15 @@ function lookForSaleItem(callback) {
         getFlashSaleItems((err, flashSaleItems) => {
             if (err) return callback(err)
             if (flashSaleItems.length === 0) return callback(new Error('Flash sale has not started yet.'))
-            Item.find((err, myItems) => {
-                if (err) return callback(err)
-                if (myItems.length === 0) return callback(new Error('No items in wish list.'))
-                const matchedItems = searchFlashSaleItems(myItems, flashSaleItems)
-                if (matchedItems.length === 0) return callback(new Error('No items of interest in this flash sale.'))
-                console.log('Found items in flash sale: ' + matchedItems.map(item => item.name))
-                const emailBody = buildEmailBody(matchedItems)
-                sendEmail(JSON.stringify(emailBody, null, 2))
-            })
+        //     Item.find((err, myItems) => {
+        //         if (err) return callback(err)
+        //         if (myItems.length === 0) return callback(new Error('No items in wish list.'))
+        //         const matchedItems = searchFlashSaleItems(myItems, flashSaleItems)
+        //         if (matchedItems.length === 0) return callback(new Error('No items of interest in this flash sale.'))
+        //         console.log('Found items in flash sale: ' + matchedItems.map(item => item.name))
+        //         const emailBody = buildEmailBody(matchedItems)
+        //         sendEmail(JSON.stringify(emailBody, null, 2))
+        //     })
             Preference.findOne({ name: 'promotionId' }, (err, preference) => {
                 if (err) return console.error(err)
                 preference.value++

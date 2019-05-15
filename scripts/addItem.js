@@ -14,5 +14,6 @@ db.once('open', () => {
     item.save((err, item) => {
         if (err) return console.error(err)
         console.log(item)
+        db.close()
     })
 })

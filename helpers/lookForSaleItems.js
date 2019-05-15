@@ -1,11 +1,10 @@
 const request = require('request')
 const Fuse = require('fuse.js')
-const mongoose = require('mongoose')
 const Item = require('../models/itemModel')
 const Preference = require('../models/preferenceModel')
 const sendEmail = require('./sendEmail')
+const connectToDb = require('./connectToDb')
 
-const mongodbUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/shopee'
 const flashSaleUri = 'https://shopee.co.th/api/v2/flash_sale/get_items'
 
 function lookForSaleItem(callback) {
@@ -32,13 +31,6 @@ function lookForSaleItem(callback) {
             })
         })
     })
-}
-
-function connectToDb(callback) {
-    mongoose.connect(mongodbUri, { useNewUrlParser: true })
-    const db = mongoose.connection
-    db.on('error', () => callback(new Error('Cannot connect to MongoDB!')))
-    db.once('open', () => callback(null, db))
 }
 
 function getFlashSaleItems(callback) {

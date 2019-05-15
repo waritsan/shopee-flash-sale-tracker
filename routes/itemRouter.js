@@ -1,10 +1,10 @@
 const express = require('express')
-const wishList = require('../models/wishListModel')
+const Item = require('../models/itemModel')
 
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    wishList.getItems((err, items) => {
+    Item.find((err, items) => {
         if (err) {
             console.log(err)
             return res.json(err)
@@ -14,17 +14,18 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    wishList.createItem(req.body, err => {
+    const item = new Item(req.body)
+    item.save(err => {
         if (err) {
             console.log(err)
             return res.json(err)
         }
-        res.json({'message': 'Item created successfully!'})
+        res.json(item)
     })
 })
 
 router.delete('/:id', (req, res) => {
-    wishList.deleteItem(req.params.id, err => {
+    Item.findById(req.params.id, err => {
         if (err) {
             console.log(err)
             return res.json(err)

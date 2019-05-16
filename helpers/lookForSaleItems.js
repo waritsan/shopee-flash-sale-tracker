@@ -102,7 +102,7 @@ function buildEmailBody(items) {
         return {
             name: item.name,
             link: `https://shopee.co.th/shop/-i.${item.shopid}.${item.itemid}`,
-            startTime: startTime.toLocaleString()
+            startTime: startTime.toLocaleString('default', { timeZone: 'Asia/Bangkok' })
         }
     })
 }

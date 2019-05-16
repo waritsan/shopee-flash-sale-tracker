@@ -98,12 +98,11 @@ function searchFlashSaleItems(items, flashSaleItems) {
 
 function buildEmailBody(items) {
     return items.map(item => {
-        const startTime = new Date(0)
-        startTime.setUTCSeconds(item.start_time)
+        const startTime = new Date(item.start_time * 1000)
         return {
             name: item.name,
             link: `https://shopee.co.th/shop/-i.${item.shopid}.${item.itemid}`,
-            startTime: startTime
+            startTime: startTime.toLocaleString()
         }
     })
 }

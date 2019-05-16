@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer')
 
-function sendEmail(text) {
+function sendEmail(text, html) {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -13,7 +13,8 @@ function sendEmail(text) {
         from: `"Mail Bot " <${process.env.MAIL_FROM}>`,
         to: process.env.MAIL_TO,
         subject: 'Shoppe Flash-Sale Alert ',
-        text: text
+        text: text,
+        html: html
     }
     
     transporter.sendMail(mailOptions, (err, info) => {

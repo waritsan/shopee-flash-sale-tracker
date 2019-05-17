@@ -43,12 +43,13 @@ function getFlashSaleItems(callback) {
             })
         } else {
             requestFlashSaleApi(flashSaleUri + '?promotionid=' + preference.value, (err, data) => {
-                if (err) return callback(err)
-                if (!data) {
-                    updatePromotionId((err, items) => {
-                        if (err) return callback(err)
-                        callback(null, items)
-                    })
+                if (err) {
+                    if (err.message === 'FlashSaleExpired') {
+                        updatePromotionId((err, items) => {
+                            if (err) return callback(err)
+                            return callback(null, items)
+                        })
+                    } else return callback(err)
                 } else callback(null, data.items)
             })
         }
@@ -75,8 +76,9 @@ function updatePromotionId(callback) {
 function requestFlashSaleApi(uri, callback) {
     request.get(uri, (err, _, body) => {
         if (err) return callback(err)
-        const data = JSON.parse(body).data
-        callback(null, data)
+        const jsonBody = JSON.parse(body)
+        if (jsonBody.error) return callback(new Error('FlashSaleExpired'))
+        callback(null, jsonBody.data)
     })
 }
 

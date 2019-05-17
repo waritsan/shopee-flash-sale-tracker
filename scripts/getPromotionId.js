@@ -6,7 +6,7 @@ const mongodbUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/shopee'
 mongoose.connect(mongodbUri, { useNewUrlParser: true })
 
 function getPromotionId(callback) {
-    Preference.findOne({ name: 'promotionid' }, (err, preference) => {
+    Preference.findOne({ name: 'promotionId' }, (err, preference) => {
         if (err) return callback(err)
         callback(preference)
     })

@@ -13,6 +13,13 @@ function lookForSaleItem(callback) {
         getFlashSaleItems((err, flashSaleItems) => {
             if (err) return callback(err)
             if (flashSaleItems.length === 0) return callback(new Error('Flash sale has not started yet.'))
+            Preference.findOne({ name: 'promotionId' }, (err, preference) => {
+                if (err) return console.error(err)
+                preference.value++
+                preference.save(err => {
+                    if (err) return callback(err)
+                })
+            })
             Item.find((err, myItems) => {
                 if (err) return callback(err)
                 if (myItems.length === 0) return callback(new Error('No items in wish list.'))
@@ -21,13 +28,6 @@ function lookForSaleItem(callback) {
                 console.log('Found items in flash sale: ' + matchedItems.map(item => item.name))
                 const emailBody = buildEmailBody(matchedItems)
                 sendEmail(JSON.stringify(emailBody, null, 2))
-            })
-            Preference.findOne({ name: 'promotionId' }, (err, preference) => {
-                if (err) return console.error(err)
-                preference.value++
-                preference.save(err => {
-                    if (err) return callback(err)
-                })
             })
         })
     })
